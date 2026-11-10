@@ -1,0 +1,587 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FocusFlow - Student Dashboard</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: white;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 240px;
+    background: #111c35;
+    padding: 30px 20px;
+}
+
+.logo {
+    color: #a78bfa;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+
+.sidebar h3 {
+    color: #94a3b8;
+    margin: 25px 0 15px;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.sidebar a {
+    display: block;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #49318c;
+    color: white;
+}
+
+/* MAIN */
+.main {
+    flex: 1;
+    padding: 35px;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 35px;
+}
+
+.header h1 {
+    font-size: 28px;
+}
+
+.header p {
+    color: #94a3b8;
+    margin-top: 8px;
+}
+
+.clock {
+    background: #1e293b;
+    padding: 15px 22px;
+    border-radius: 12px;
+    color: #a78bfa;
+    font-size: 20px;
+}
+
+/* CARDS */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: #1e293b;
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid #334155;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #a78bfa;
+}
+
+.card h3 {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.card h2 {
+    font-size: 35px;
+    margin-top: 15px;
+}
+
+.purple {
+    color: #a78bfa;
+}
+
+.green {
+    color: #4ade80;
+}
+
+.orange {
+    color: #fb923c;
+}
+
+/* CONTENT */
+.content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.panel {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 16px;
+    padding: 25px;
+}
+
+.panel h2 {
+    margin-bottom: 20px;
+}
+
+/* TASKS */
+.task-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.task-form input {
+    flex: 1;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #475569;
+    border-radius: 9px;
+    background: #0f172a;
+    color: white;
+    outline: none;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 9px;
+    padding: 13px 18px;
+    background: #8b5cf6;
+    color: white;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #7c3aed;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #29364d;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.task input {
+    accent-color: #8b5cf6;
+    width: 18px;
+    height: 18px;
+}
+
+.task span {
+    flex: 1;
+    overflow-wrap: anywhere;
+}
+
+.task.done span {
+    text-decoration: line-through;
+    color: #94a3b8;
+}
+
+.delete {
+    background: #ef4444;
+    padding: 8px 11px;
+}
+
+/* PROGRESS */
+.progress {
+    background: #334155;
+    height: 12px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+    transition: width 0.4s;
+}
+
+.motivation {
+    background: linear-gradient(135deg, #49318c, #1e3a8a);
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+.motivation p {
+    color: #e2e8f0;
+    line-height: 1.6;
+    margin-top: 12px;
+}
+
+.footer {
+    text-align: center;
+    color: #64748b;
+    padding: 30px 0 10px;
+}
+
+@media(max-width: 850px) {
+    .sidebar {
+        width: 180px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width: 550px) {
+    .container {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .logo {
+        margin-bottom: 15px;
+    }
+
+    .sidebar h3 {
+        display: none;
+    }
+
+    .sidebar a {
+        display: inline-block;
+        padding: 10px;
+        margin: 3px;
+    }
+
+    .main {
+        padding: 20px 14px;
+    }
+
+    .header h1 {
+        font-size: 23px;
+    }
+
+    .task-form {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+        <div class="logo">✦ FocusFlow</div>
+
+        <h3>MENU</h3>
+        <a href="#" class="active">🏠 Dashboard</a>
+        <a href="#tasks">📋 My Tasks</a>
+        <a href="#progress">📊 Progress</a>
+        <a href="#motivation">💡 Motivation</a>
+
+        <h3>ACCOUNT</h3>
+        <a href="#about">👤 About</a>
+    </aside>
+
+    <main class="main">
+
+        <header class="header">
+            <div>
+                <h1>Welcome Back! 👋</h1>
+                <p>Your journey to success starts today.</p>
+            </div>
+
+            <div class="clock" id="clock">00:00:00</div>
+        </header>
+
+        <section class="cards">
+
+            <div class="card">
+                <h3>📚 Total Tasks</h3>
+                <h2 class="purple" id="total">0</h2>
+            </div>
+
+            <div class="card">
+                <h3>✅ Completed</h3>
+                <h2 class="green" id="completed">0</h2>
+            </div>
+
+            <div class="card">
+                <h3>⏳ Remaining</h3>
+                <h2 class="orange" id="remaining">0</h2>
+            </div>
+
+        </section>
+
+        <section class="content">
+
+            <div class="panel" id="tasks">
+                <h2>📋 My Daily Tasks</h2>
+
+                <form class="task-form" id="taskForm">
+                    <input
+                        type="text"
+                        id="taskInput"
+                        placeholder="What do you need to do?"
+                        maxlength="100"
+                        required
+                    >
+                    <button type="submit">+ Add Task</button>
+                </form>
+
+                <div id="taskList"></div>
+            </div>
+
+            <div>
+
+                <div class="panel" id="progress">
+                    <h2>📊 Your Progress</h2>
+
+                    <h3 id="percentage">0% Completed</h3>
+
+                    <div class="progress">
+                        <div class="progress-bar"
+                             id="progressBar"></div>
+                    </div>
+
+                    <p id="progressMessage">
+                        Start adding your tasks!
+                    </p>
+                </div>
+
+                <div class="motivation" id="motivation">
+                    <h2>💡 Daily Motivation</h2>
+
+                    <p id="quote">
+                        "Success is the sum of small efforts,
+                        repeated day in and day out."
+                    </p>
+
+                    <p>Keep going. You can do it! 🚀</p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <footer class="footer" id="about">
+            <p>FocusFlow © 2026 | Built with HTML, CSS & JavaScript</p>
+            <p>Designed for ambitious students 💜</p>
+        </footer>
+
+    </main>
+
+</div>
+
+<script>
+
+// DIGITAL CLOCK
+function updateClock() {
+    const now = new Date();
+
+    document.getElementById("clock").textContent =
+        now.toLocaleTimeString();
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+
+// LOAD SAVED TASKS
+let tasks = [];
+
+try {
+    tasks = JSON.parse(
+        localStorage.getItem("focusflowTasks")
+    ) || [];
+} catch {
+    tasks = [];
+}
+
+
+// SAVE TASKS
+function saveTasks() {
+    localStorage.setItem(
+        "focusflowTasks",
+        JSON.stringify(tasks)
+    );
+}
+
+
+// DISPLAY TASKS
+function displayTasks() {
+
+    const list = document.getElementById("taskList");
+    list.innerHTML = "";
+
+    tasks.forEach((task, index) => {
+
+        const item = document.createElement("div");
+        item.className = "task" + (
+            task.done ? " done" : ""
+        );
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = task.done;
+
+        checkbox.addEventListener("change", () => {
+            tasks[index].done = checkbox.checked;
+            saveTasks();
+            displayTasks();
+        });
+
+        const name = document.createElement("span");
+        name.textContent = task.name;
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete";
+        deleteButton.textContent = "✕";
+        deleteButton.setAttribute("aria-label", "Delete task");
+
+        deleteButton.addEventListener("click", () => {
+            tasks.splice(index, 1);
+            saveTasks();
+            displayTasks();
+        });
+
+        item.append(checkbox, name, deleteButton);
+        list.appendChild(item);
+    });
+
+    updateStatistics();
+}
+
+
+// ADD NEW TASK
+document.getElementById("taskForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const input = document.getElementById("taskInput");
+    const name = input.value.trim();
+
+    if (name === "") return;
+
+    tasks.push({
+        name: name,
+        done: false
+    });
+
+    input.value = "";
+
+    saveTasks();
+    displayTasks();
+});
+
+
+// UPDATE STATISTICS
+function updateStatistics() {
+
+    const total = tasks.length;
+
+    const completed = tasks.filter(
+        task => task.done
+    ).length;
+
+    const remaining = total - completed;
+
+    const percentage = total === 0
+        ? 0
+        : Math.round((completed / total) * 100);
+
+    document.getElementById("total").textContent = total;
+
+    document.getElementById("completed").textContent =
+        completed;
+
+    document.getElementById("remaining").textContent =
+        remaining;
+
+    document.getElementById("percentage").textContent =
+        percentage + "% Completed";
+
+    document.getElementById("progressBar").style.width =
+        percentage + "%";
+
+    let message = "Start adding your tasks!";
+
+    if (percentage === 100 && total > 0) {
+        message = "Amazing! All tasks completed! 🎉";
+    } else if (percentage >= 50) {
+        message = "Great work! Keep pushing! 🔥";
+    } else if (total > 0) {
+        message = "Every small step matters. 💪";
+    }
+
+    document.getElementById("progressMessage")
+        .textContent = message;
+}
+
+
+// RANDOM MOTIVATIONAL QUOTE
+const quotes = [
+    "Believe in yourself and all that you are.",
+    "Dream big. Work hard. Stay focused.",
+    "Your future is created by what you do today.",
+    "Great things never come from comfort zones.",
+    "Small progress is still progress.",
+    "Don't stop until you are proud."
+];
+
+const randomQuote = Math.floor(
+    Math.random() * quotes.length
+);
+
+document.getElementById("quote").textContent =
+    '"' + quotes[randomQuote] + '"';
+
+
+// INITIALIZE DASHBOARD
+displayTasks();
+
+</script>
+
+</body>
+</html>
